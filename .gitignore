@@ -1,0 +1,23 @@
+# Editor and IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build artifacts
+*.jar
+*.war
+*.zip
+
+# Logs
+*.log
+logs/
+
+# Docker
+.dockerignore
+
+# Test files
+test/
+*.test.xml
