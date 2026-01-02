@@ -240,64 +240,53 @@ The validator checks invoices against:
 
 ## Production Deployment
 
-### Docker Swarm
+### Docker Compose
 
-```bash
-docker service create \
-  --name xrechnung-validator \
-  --publish 8080:8080 \
-  --replicas 3 \
-  xrechnung-validator
-```
-
-### Kubernetes
+Create a `docker-compose.yml` file:
 
 ```yaml
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: xrechnung-validator
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: xrechnung-validator
-  template:
-    metadata:
-      labels:
-        app: xrechnung-validator
-    spec:
-      containers:
-      - name: validator
-        image: xrechnung-validator:latest
-        ports:
-        - containerPort: 8080
-        livenessProbe:
-          httpGet:
-            path: /server/health
-            port: 8080
-          initialDelaySeconds: 40
-          periodSeconds: 30
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: xrechnung-validator
-spec:
-  selector:
-    app: xrechnung-validator
-  ports:
-  - port: 8080
-    targetPort: 8080
-  type: ClusterIP
+version: '3.8'
+
+services:
+  xrechnung-validator:
+    image: exsemt/xrechnung-kosit-validator:1.0.0
+    container_name: xrechnung-validator
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xmx1g -Xms512m
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/server/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
 ```
+
+Deploy the service:
+
+```bash
+# Start the service
+docker-compose up -d
+
+# Check status
+docker-compose ps
+
+# View logs
+docker-compose logs -f
+
+# Stop the service
+docker-compose down
+```
+
+### Production Recommendations
+
+- **Resource Limits**: Adjust `JAVA_OPTS` based on your validation volume
+- **Monitoring**: Use health check endpoint for monitoring
+- **Scaling**: Use orchestration tools (Docker Swarm, Kubernetes) for high availability
+- **Security**: Run behind a reverse proxy (nginx, traefik) with TLS
+- **Updates**: Pin specific version tags instead of `latest`
 
 ## Troubleshooting
 
@@ -328,7 +317,7 @@ docker run -d \
 
 ### Build from source
 ```bash
-git clone https://github.com/yourusername/xrechnung-kosit-validator.git
+git clone https://github.com/exsemt/xrechnung-kosit-validator.git
 cd xrechnung-kosit-validator
 docker build -t xrechnung-validator .
 ```
@@ -365,4 +354,3 @@ MIT License - see [LICENSE](LICENSE) file for details.
 For issues related to:
 - **This Docker container**: Open an issue in this repository
 - **KoSIT Validator**: Check the [official repository](https://github.com/itplr-kosit/validator/issues)
-- **XRechnung Standard**: Visit [xrechnung.de](https://www.xrechnung.de/)
