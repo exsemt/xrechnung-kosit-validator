@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added unprivileged non-root user (`validator`) for enhanced container security
 - Added `--disable-gui` flag to daemon startup command
+- Added metadata labels (`validator.version`, `xrechnung.version`, `xrechnung.config.date`) for easy container inspection
 
 ### Changed
 - Switched base image from `eclipse-temurin:25-jre` to `eclipse-temurin:25-jre-alpine` reducing image size by ~35%
