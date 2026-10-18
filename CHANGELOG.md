@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added unprivileged non-root user (`validator`) for enhanced container security
 - Added `--disable-gui` flag to daemon startup command
 
+### Changed
+- Switched base image from `eclipse-temurin:25-jre` to `eclipse-temurin:25-jre-alpine` reducing image size by ~35%
+
 ## [1.1.0] - 2026-10-18
 
 ### Changed

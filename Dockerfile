@@ -1,5 +1,5 @@
 # Dockerfile for KoSIT Validator Service with built-in daemon mode
-FROM eclipse-temurin:25-jre
+FROM eclipse-temurin:25-jre-alpine
 
 LABEL maintainer="xsatz"
 LABEL description="KoSIT Validator for XRechnung and ZUGFeRD"
@@ -7,10 +7,7 @@ LABEL description="KoSIT Validator for XRechnung and ZUGFeRD"
 WORKDIR /validator
 
 # Install curl, wget and unzip
-# hadolint ignore=DL3008
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends curl wget unzip && \
-    rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache curl wget unzip
 
 # Download KoSIT Validator standalone JAR
 ARG VALIDATOR_VERSION=1.6.3
@@ -20,15 +17,13 @@ RUN wget --progress=dot:giga https://repo1.maven.org/maven2/org/kosit/validator/
 ARG CONFIG_VERSION=2026-08-31
 ARG XRECHNUNG_VERSION=3.0.2
 RUN wget --progress=dot:giga https://github.com/itplr-kosit/validator-configuration-xrechnung/releases/download/v${CONFIG_VERSION}/xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip && \
-    unzip xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip -d /validator/config && \
+    unzip -q xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip -d /validator/config && \
     rm xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip && \
-    apt-get remove -y wget unzip && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    apk del wget unzip
 
 # Create non-root user for security
-RUN groupadd -r validator && \
-    useradd -r -g validator -d /validator -s /sbin/nologin validator && \
+RUN addgroup -S validator && \
+    adduser -S -G validator -h /validator -s /sbin/nologin validator && \
     chown -R validator:validator /validator
 
 USER validator
