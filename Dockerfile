@@ -14,15 +14,24 @@ LABEL org.opencontainers.image.source="https://github.com/exsemt/xrechnung-kosit
 
 WORKDIR /validator
 
-# Install dependencies, download artifacts, and create non-root user
+# Install curl, wget and unzip
 # hadolint ignore=DL3018
-RUN apk add --no-cache curl wget unzip && \
-    wget --progress=dot:giga "https://repo1.maven.org/maven2/org/kosit/validator/${VALIDATOR_VERSION}/validator-${VALIDATOR_VERSION}-standalone.jar" -O /validator/validator.jar && \
-    wget --progress=dot:giga "https://github.com/itplr-kosit/validator-configuration-xrechnung/releases/download/v${CONFIG_VERSION}/xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip" && \
+RUN apk add --no-cache curl wget unzip
+
+# Download KoSIT Validator standalone JAR
+# hadolint ignore=DL3059
+RUN wget --progress=dot:giga "https://repo1.maven.org/maven2/org/kosit/validator/${VALIDATOR_VERSION}/validator-${VALIDATOR_VERSION}-standalone.jar" -O /validator/validator.jar
+
+# Download and extract XRechnung Configuration
+# hadolint ignore=DL3059
+RUN wget --progress=dot:giga "https://github.com/itplr-kosit/validator-configuration-xrechnung/releases/download/v${CONFIG_VERSION}/xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip" && \
     unzip -q "xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip" -d /validator/config && \
     rm "xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip" && \
-    apk del wget unzip && \
-    addgroup -g 1000 -S validator && \
+    apk del wget unzip
+
+# Create non-root user for security
+# hadolint ignore=DL3059
+RUN addgroup -g 1000 -S validator && \
     adduser -u 1000 -S -G validator -h /validator -s /sbin/nologin validator && \
     chown -R validator:validator /validator
 
