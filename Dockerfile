@@ -26,6 +26,13 @@ RUN wget --progress=dot:giga https://github.com/itplr-kosit/validator-configurat
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Create non-root user for security
+RUN groupadd -r validator && \
+    useradd -r -g validator -d /validator -s /sbin/nologin validator && \
+    chown -R validator:validator /validator
+
+USER validator
+
 EXPOSE 8080
 
 # Health Check
@@ -36,4 +43,4 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
 ENV JAVA_OPTS="-Xmx512m -Xms256m"
 
 # Start KoSIT Validator in daemon mode
-CMD ["sh", "-c", "java $JAVA_OPTS -jar /validator/validator.jar -s /validator/config/scenarios.xml -D -H 0.0.0.0 -P 8080"]
+CMD ["sh", "-c", "java $JAVA_OPTS -jar /validator/validator.jar -s /validator/config/scenarios.xml -D -H 0.0.0.0 -P 8080 --disable-gui"]
