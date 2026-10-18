@@ -10,7 +10,7 @@ Docker container for validating XRechnung (XML) and ZUGFeRD (PDF) invoices using
 - ✅ **HTTP Daemon Mode** - Built-in HTTP server for easy integration
 - ✅ **Docker Ready** - Simple deployment with Docker or Docker Compose
 - ✅ **Health Checks** - Built-in health check endpoint
-- ✅ **Lightweight** - Based on Eclipse Temurin JRE 17
+- ✅ **Lightweight** - Based on Eclipse Temurin JRE 25
 
 ## Quick Start
 

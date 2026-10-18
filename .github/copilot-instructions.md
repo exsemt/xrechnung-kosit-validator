@@ -10,7 +10,7 @@
 - Offer a simple HTTP API for invoice validation without complex Java setup
 
 ### Technology Stack
-- **Base Image**: Eclipse Temurin 17 JRE (official OpenJDK)
+- **Base Image**: Eclipse Temurin 25 JRE (official OpenJDK)
 - **Validator**: KoSIT Validator 1.6.3 (standalone JAR)
 - **Configuration**: XRechnung Configuration 3.0.2 (release 2026-08-31)
 - **Orchestration**: Docker Compose
@@ -19,7 +19,7 @@
 ## Architecture
 
 ### Container Components
-1. **Java Runtime**: Eclipse Temurin 17 JRE for minimal footprint
+1. **Java Runtime**: Eclipse Temurin 25 JRE for minimal footprint
 2. **KoSIT Validator**: Standalone JAR with built-in HTTP daemon mode
 3. **XRechnung Configuration**: Scenarios and validation rules (CII & UBL)
 4. **Health Check**: Built-in endpoint at `/server/health`

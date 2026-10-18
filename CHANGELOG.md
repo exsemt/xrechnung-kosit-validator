@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.1.0] - 2026-10-18
 
 ### Changed
+- Updated Docker base image from `eclipse-temurin:17-jre` to `eclipse-temurin:25-jre` (LTS)
 - Updated KoSIT Validator from 1.5.2 to 1.6.3
   - Fixed security advisory GHSA-hg2c-p2m3-q29m (unrestricted URI resolution in STRICT_LOCAL mode)
   - Dropped Java 8 support, migrated from `javax` to `jakarta xml bind`
@@ -17,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Includes CEN Schematron Rules 1.3.16
   - Added custom severity rules for CII-SR-465, CII-SR-466, CII-SR-475, CII-SR-476
   - Handled new distribution zip naming convention (`xrechnung-3.0.2-validator-configuration-YYYY-MM-DD.zip`)
+- Updated GitHub Actions workflow dependencies (`setup-buildx-action@v4`, `login-action@v4`, `metadata-action@v6`, `build-push-action@v7`)
 - Updated `test.sh` to support configurable `TEST_PORT` (default: 8085) to avoid local port conflicts
 
 ## [1.0.0] - 2026-01-01
