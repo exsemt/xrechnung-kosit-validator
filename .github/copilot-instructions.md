@@ -231,6 +231,7 @@ chore: bump KoSIT validator to 1.5.3
 3. **Dependency scanning**: Monitor for CVEs in Java dependencies
 4. **Network isolation**: Run in private networks when possible
 5. **Resource limits**: Always set memory/CPU limits in production
+6. **Non-root user**: Container executes as unprivileged `validator` user
 
 ## Performance Guidelines
 

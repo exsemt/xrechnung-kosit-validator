@@ -17,6 +17,7 @@ Official Docker image: [exsemt/xrechnung-kosit-validator on Docker Hub](https://
 - ✅ **Docker Ready** - Simple deployment with Docker or Docker Compose
 - ✅ **Health Checks** - Built-in health check endpoint
 - ✅ **Lightweight** - Based on Eclipse Temurin JRE 25
+- ✅ **Secure** - Runs as unprivileged non-root user (`validator`)
 
 ## Quick Start
 
