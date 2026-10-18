@@ -15,18 +15,20 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
+TEST_PORT="${TEST_PORT:-8085}"
+
 echo -e "${YELLOW}📦 Building Docker image...${NC}"
 docker build -t xrechnung-validator-test .
 
-echo -e "${YELLOW}🔧 Starting container...${NC}"
-docker run -d --name xrechnung-validator-test -p 8080:8080 xrechnung-validator-test
+echo -e "${YELLOW}🔧 Starting container on port ${TEST_PORT}...${NC}"
+docker run -d --name xrechnung-validator-test -p "${TEST_PORT}:8080" xrechnung-validator-test
 
 echo -e "${YELLOW}⏳ Waiting for service to be ready...${NC}"
 sleep 30
 
 # Test health endpoint
 echo -e "${YELLOW}🏥 Testing health endpoint...${NC}"
-HEALTH_RESPONSE=$(curl -s http://localhost:8080/server/health)
+HEALTH_RESPONSE=$(curl -s "http://localhost:${TEST_PORT}/server/health")
 if echo "$HEALTH_RESPONSE" | grep -q "UP"; then
     echo -e "${GREEN}✅ Health check passed${NC}"
 else
@@ -42,7 +44,7 @@ if [ -f "examples/valid-xrechnung-cii.xml" ]; then
     echo -e "${YELLOW}📄 Testing validation with example invoice...${NC}"
     HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
         --data-binary @examples/valid-xrechnung-cii.xml \
-        http://localhost:8080/)
+        "http://localhost:${TEST_PORT}/")
 
     if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 406 ]; then
         echo -e "${GREEN}✅ Validation endpoint working (HTTP $HTTP_CODE)${NC}"

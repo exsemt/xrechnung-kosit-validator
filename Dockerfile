@@ -13,14 +13,15 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Download KoSIT Validator standalone JAR
-ARG VALIDATOR_VERSION=1.5.2
+ARG VALIDATOR_VERSION=1.6.3
 RUN wget --progress=dot:giga https://repo1.maven.org/maven2/org/kosit/validator/${VALIDATOR_VERSION}/validator-${VALIDATOR_VERSION}-standalone.jar -O /validator/validator.jar
 
 # Download XRechnung Configuration
-ARG CONFIG_VERSION=2025-07-10
-RUN wget --progress=dot:giga https://github.com/itplr-kosit/validator-configuration-xrechnung/releases/download/release-${CONFIG_VERSION}/validator-configuration-xrechnung_3.0.2_${CONFIG_VERSION}.zip && \
-    unzip validator-configuration-xrechnung_3.0.2_${CONFIG_VERSION}.zip -d /validator/config && \
-    rm validator-configuration-xrechnung_3.0.2_${CONFIG_VERSION}.zip && \
+ARG CONFIG_VERSION=2026-08-31
+ARG XRECHNUNG_VERSION=3.0.2
+RUN wget --progress=dot:giga https://github.com/itplr-kosit/validator-configuration-xrechnung/releases/download/v${CONFIG_VERSION}/xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip && \
+    unzip xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip -d /validator/config && \
+    rm xrechnung-${XRECHNUNG_VERSION}-validator-configuration-${CONFIG_VERSION}.zip && \
     apt-get remove -y wget unzip && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
