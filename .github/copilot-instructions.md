@@ -11,8 +11,8 @@
 
 ### Technology Stack
 - **Base Image**: Eclipse Temurin 17 JRE (official OpenJDK)
-- **Validator**: KoSIT Validator 1.5.2 (standalone JAR)
-- **Configuration**: XRechnung Configuration 3.0.2
+- **Validator**: KoSIT Validator 1.6.3 (standalone JAR)
+- **Configuration**: XRechnung Configuration 3.0.2 (release 2026-08-31)
 - **Orchestration**: Docker Compose
 - **Standards**: EN16931, XRechnung 3.0
 

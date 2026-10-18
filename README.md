@@ -99,15 +99,16 @@ The response body contains a detailed XML report with all validation errors and 
 
 | Argument | Default | Description |
 |----------|---------|-------------|
-| `VALIDATOR_VERSION` | `1.5.2` | KoSIT Validator version |
-| `CONFIG_VERSION` | `2025-07-10` | XRechnung configuration release date |
+| `VALIDATOR_VERSION` | `1.6.3` | KoSIT Validator version |
+| `CONFIG_VERSION` | `2026-08-31` | XRechnung configuration release date |
+| `XRECHNUNG_VERSION` | `3.0.2` | Supported XRechnung standard version |
 
 ### Custom Validator Version
 
 ```bash
 docker build \
-  --build-arg VALIDATOR_VERSION=1.5.2 \
-  --build-arg CONFIG_VERSION=2025-07-10 \
+  --build-arg VALIDATOR_VERSION=1.6.3 \
+  --build-arg CONFIG_VERSION=2026-08-31 \
   -t xrechnung-validator .
 ```
 
