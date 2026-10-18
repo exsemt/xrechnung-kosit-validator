@@ -64,10 +64,12 @@ Client → POST XML → Validator Daemon → KoSIT Engine → Scenarios → Rule
 ### Dockerfile Best Practices
 
 1. **Use multi-stage builds** (if needed for future enhancements)
-2. **Minimize layers**: Combine RUN commands where logical
+2. **Minimize layers**: Combine RUN commands where logical, or use `# hadolint ignore=DL3059` when steps are separated for readability
 3. **Clean up in same layer**: Remove temp files in same RUN command
 4. **Pin versions**: Always use ARG for version numbers
 5. **Health checks**: Always include HEALTHCHECK directive
+6. **Non-root execution**: Run container as unprivileged numeric user (`USER 1000:1000`)
+7. **Headless daemon mode**: Run Java daemon with `--disable-gui` to avoid loading AWT/GUI components
 
 ### Example Patterns
 
@@ -231,7 +233,7 @@ chore: bump KoSIT validator to 1.5.3
 3. **Dependency scanning**: Monitor for CVEs in Java dependencies
 4. **Network isolation**: Run in private networks when possible
 5. **Resource limits**: Always set memory/CPU limits in production
-6. **Non-root user**: Container executes as unprivileged `validator` user
+6. **Non-root user**: Container executes as unprivileged numeric user `1000:1000` (`validator`)
 
 ## Performance Guidelines
 
@@ -283,5 +285,5 @@ Quarterly:
 
 ---
 
-**Last Updated**: 2026-01-01
+**Last Updated**: 2026-10-18
 **Maintainer**: XSatz Team
