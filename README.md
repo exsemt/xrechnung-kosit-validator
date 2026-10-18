@@ -1,6 +1,12 @@
 # XRechnung KoSIT Validator Docker
 
+[![Docker Hub](https://img.shields.io/badge/docker%20hub-exsemt%2Fxrechnung--kosit--validator-blue?logo=docker)](https://hub.docker.com/r/exsemt/xrechnung-kosit-validator)
+[![GitHub Release](https://img.shields.io/github/v/release/exsemt/xrechnung-kosit-validator)](https://github.com/exsemt/xrechnung-kosit-validator/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Docker container for validating XRechnung (XML) and ZUGFeRD (PDF) invoices using the official [KoSIT Validator](https://github.com/itplr-kosit/validator) with built-in HTTP daemon mode.
+
+Official Docker image: [exsemt/xrechnung-kosit-validator on Docker Hub](https://hub.docker.com/r/exsemt/xrechnung-kosit-validator).
 
 ## Features
 
@@ -14,7 +20,18 @@ Docker container for validating XRechnung (XML) and ZUGFeRD (PDF) invoices using
 
 ## Quick Start
 
-### Using Docker
+### Using Docker Hub (Recommended)
+
+Run the pre-built multi-architecture image directly from [Docker Hub](https://hub.docker.com/r/exsemt/xrechnung-kosit-validator):
+
+```bash
+docker run -d \
+  --name validator \
+  -p 8080:8080 \
+  exsemt/xrechnung-kosit-validator:latest
+```
+
+### Building Locally
 
 ```bash
 # Build the image
@@ -250,7 +267,7 @@ version: '3.8'
 
 services:
   xrechnung-validator:
-    image: exsemt/xrechnung-kosit-validator:1.0.0
+    image: exsemt/xrechnung-kosit-validator:1.1.0
     container_name: xrechnung-validator
     ports:
       - "8080:8080"
