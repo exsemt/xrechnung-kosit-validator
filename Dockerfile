@@ -1,5 +1,5 @@
 # Dockerfile for KoSIT Validator Service with built-in daemon mode
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:25-jre
 
 LABEL maintainer="xsatz"
 LABEL description="KoSIT Validator for XRechnung and ZUGFeRD"
