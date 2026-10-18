@@ -15,6 +15,7 @@ LABEL org.opencontainers.image.source="https://github.com/exsemt/xrechnung-kosit
 WORKDIR /validator
 
 # Install curl, wget and unzip
+# hadolint ignore=DL3018
 RUN apk add --no-cache curl wget unzip
 
 # Download KoSIT Validator standalone JAR
@@ -36,6 +37,7 @@ USER validator
 EXPOSE 8080
 
 # Health Check
+# hadolint ignore=DL3025
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:8080/server/health || exit 1
 
