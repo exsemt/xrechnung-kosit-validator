@@ -268,7 +268,7 @@ version: '3.8'
 
 services:
   xrechnung-validator:
-    image: exsemt/xrechnung-kosit-validator:1.1.0
+    image: exsemt/xrechnung-kosit-validator:1.2.0
     container_name: xrechnung-validator
     ports:
       - "8080:8080"
